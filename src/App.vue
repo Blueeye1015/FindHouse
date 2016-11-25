@@ -7,12 +7,16 @@
 </template>
 
 <script>
+	import questions from './question'
+	import anwsers from './anwser'
+
 	const arr = [
 		'接下来会有一些小问题',
 		'不要慌张~',
-		'很快就搞定了',
-		'rua~'
 	]
+	console.log(questions)
+	console.log(anwsers)
+
 	export default {
 		data() {
 			return {
@@ -33,6 +37,7 @@
 
 <style lang="stylus" scoped>
 	#qa-block
+		font-size 2em
 		text-align center
 		position absolute
 		top 0
