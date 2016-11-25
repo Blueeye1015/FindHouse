@@ -3,6 +3,11 @@
 		<transition name="slide-fade">
 			<h1 v-if="showNote">{{ title }}</h1>
 		</transition>
+		<transition name="slide-fade">
+			<div v-if="showAnwser" id="anwsers">
+				<p class="anwser" v-for="(item, index) in this.currentAnwser" @click="pushAnwser(index)">{{ item }}</p>
+			</div>
+		</transition>
 	</div>
 </template>
 
@@ -11,27 +16,47 @@
 	import anwsers from './anwser'
 
 	const arr = [
-		'接下来会有一些小问题',
-		'不要慌张~',
+		'无繁琐，只有妙不可言',
+		'正在处理一些事情...',
 	]
 
 	arr.push(...questions)
-	console.log(questions)
-	console.log(anwsers)
+
+	const end = arr.length
 
 	export default {
 		data() {
 			return {
-				title: '你好',
+				title: 'Hi',
 				showNote: true,
+				showAnwser: false,
+				currentAnwser: [],
+				userChoose: [],
 				num: 0
 			}
 		},
 		methods: {
 			updateNote: function() {
 				this.showNote = false
+				this.showAnwser = false
+
+				if ( this.num === end ) {
+					this.$http.get('/', this.userChoose).then((respone) => { // 这里改一下api地址
+						console.log(respone) // 这个回调可以做api打完之后的事情
+					})
+				}
+
+				// 目前预设的开场白是2句，所以是this.num - 2。如果你们加了开场白，需要改一下
+				if ( this.num - 2 >= 0 ) {
+					this.currentAnwser = anwsers[this.num - 2]
+					setTimeout(() => { this.showAnwser = true }, 1500)
+				}
+
 				this.title = arr[this.num++]
 				setTimeout(() => { this.showNote = true }, 1000)
+			},
+			pushAnwser: function(anwser) {
+				this.userChoose.push(anwser)
 			}
 		}
 	}
@@ -49,6 +74,9 @@
 		margin auto
 		height 240px
 		width 70%
+		.anwser
+			font-size 1.2em
+
 	.slide-fade-enter-active
 		transition all .4s ease
 	.slide-fade-leave-active
