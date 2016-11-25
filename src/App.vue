@@ -14,6 +14,8 @@
 		'接下来会有一些小问题',
 		'不要慌张~',
 	]
+
+	arr.push(...questions)
 	console.log(questions)
 	console.log(anwsers)
 
@@ -37,7 +39,7 @@
 
 <style lang="stylus" scoped>
 	#qa-block
-		font-size 2em
+		font-size 1.5em
 		text-align center
 		position absolute
 		top 0
